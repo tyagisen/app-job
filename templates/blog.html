@@ -1,0 +1,160 @@
+{%extends 'base.html'%} {% load static %} {%block content%}
+
+
+<head>
+  <link rel="stylesheet" href="{% static 'make/style.default.css' %}" id="theme-stylesheet">
+  <link rel="stylesheet" href="{% static 'make/custom.css' %}">
+  <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+
+  <link href='{% static "styles/github.css" %}' rel="stylesheet">
+</head>
+
+<link href='{% static "styles/github.css" %}' rel="stylesheet">
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'images/blog.jpg' %}');"  id="home-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <h1 class="text-white font-weight-bold">The JobHub Blog🤔</h1>
+        <div class="custom-breadcrumbs">
+          <a href="{%url 'jobapp:home'%}" class="btn btn-outline-warning btn-sm "><span class="text" style="color: black !important;">Home</span></a></a>
+          <span class="mx-2 slash">/</span>
+          <span class="text-white"><strong>BLOG </strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<style>
+  .post{
+    height: 170px !important;
+    width:200px !important;
+    margin-left:0px !important;
+    margin-bottom: 400px !important;
+  }
+
+  .imagess{
+    height: 20pc !important;
+    margin-left: 20px !important;
+    border-radius: 20px !important;
+    width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.591), 0 6px 20px 0 rgba(0, 0, 0, 0.605);
+  text-align: center;
+  }
+
+/* Zoom In #2 */
+.hover02 figure img {
+	width: 150px;
+	height: auto;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover02 figure:hover img {
+	width: 200px;
+}
+
+.row{
+  margin-left: 80px !important;
+}
+
+</style>
+
+
+
+<div class="row">
+  <div class="row">
+    <!-- Latest Posts -->
+    <main class=" posts-listing col-lg-8">
+      <div class="container">
+        <div class="row">
+          <!-- post -->
+          {% for post in queryset %}
+
+          <div class="post hover02 column">
+            <div class="post-thumbnail">
+              <figure><a href="{{post.get_absolute_url}}"><img class="imagess" src="{{post.thumbnail.url}}" alt="..." class="img-fluid"/></a></figure>
+            </div>
+          
+          
+
+            <div class="post-details">
+              <div class="post-meta d-flex justify-content-between">
+                <!-- <div class="date meta-last">20 May | 2016</div> -->
+                <div class="category">
+                  {% for cat in post.categories.all %}
+                  <a href="#">{{cat}}</a>
+                  {%endfor%}
+                </div>
+              </div>
+              <a href="{{post.get_absolute_url}}">
+                <h3 class="h4">{{post.title}}</h3></a
+              >
+              <p class="text-muted">{{post.overview}}</p>
+              <footer class="post-footer d-flex align-items-center">
+                <a href="#" class="author d-flex align-items-center flex-wrap">
+                  
+                  <div class="title">
+                    <span>{{post.user.username}}</span>
+                  </div></a
+                >
+                <div class="date">
+                  <i class="icon-clock"></i>{{post.timestamp|timesince}} ago
+                </div>
+                <div class="comments meta-last">
+                  <i class="icon-comment"></i>{{post.comment_count}}
+                </div>
+              </footer>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+        <!-- Pagination -->
+
+        <nav aria-label="Page navigation example">
+          <ul
+            class="pagination pagination-template d-flex justify-content-center"
+          >
+            {%if queryset.has_previous%}
+
+            <li class="page-item">
+              <a
+                href="?{{page_request_variable}}={{queryset.previous_page_number}}"
+                class="page-link"
+              >
+                <i class="fa fa-angle-left"></i
+              ></a>
+            </li>
+            {%endif%}
+
+            <li class="page-item">
+              <a
+                href="?{{ page_request_var }}={{ queryset.number }}"
+                class="page-link active"
+              >
+                {{ queryset.number }}
+              </a>
+            </li>
+
+            {%if queryset.has_next%}
+            <li class="page-item">
+              <a
+                href="?{{page_request_variable}}={{queryset.previous_page_number}}"
+                class="page-link"
+              >
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {%endif%}
+          </ul>
+        </nav>
+      </div>
+    </main>
+    {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+  </div>
+</div>
+
+
+
+{%endblock content%}
+

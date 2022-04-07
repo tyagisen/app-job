@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load is_job_already_applied %}
+{% load is_job_already_saved %}
+{% block content %}
+{% if is_applied %}
+    <div class="col-6">
+        <span class="btn btn-block btn-danger btn-md">Already Applied</span>
+    </div>
+{% else %}
+<div class="col-6">
+    <form action="{% url 'jobapp:apply-job' job.id %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="job" value="{{ job.id }}">
+
+    </form>
+
+</div>
+{% endif %}
+
+{% endblock %}

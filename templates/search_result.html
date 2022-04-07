@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'images/blog.jpg' %}');"  id="home-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="text-white font-weight-bold">The JobHub Blog🤔</h1>
+          <div class="custom-breadcrumbs">
+            <a href="{%url 'jobapp:home'%}" class="btn btn-outline-warning btn-sm "><span class="text" style="color: black !important;">Home</span></a></a>
+            <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>BLOG </strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+<h2>This is the results of your search</h2>
+{% for post in queryset %}
+    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    <br />
+{% endfor %}
+
+{% endblock %}
