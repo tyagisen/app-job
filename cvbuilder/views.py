@@ -71,7 +71,7 @@ class MainPage(LoginRequiredMixin, View):
         try:
             resume = Resume.objects.get(user=request.user)
         except Resume.DoesNotExist:
-            resume = Resume(user=request.user, name=request.user.username)
+            resume = Resume(user=request.user)
             resume.save()
 
         ctx = {

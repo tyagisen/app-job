@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 import random
 import string
+from account.models import User
 
 
 class Template(models.Model):
@@ -16,7 +17,7 @@ class Template(models.Model):
 
 
 class Resume(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 # IMAGE FIELD MODEL
     image = models.ImageField(upload_to='cv_images', null=True, blank=True)
 
